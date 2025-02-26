@@ -33,7 +33,7 @@ find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(pcl_conversions REQUIRED)
-find_package(livox_ros_driver2 REQUIRED)
+# find_package(livox_ros_driver2 REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(builtin_interfaces REQUIRED)
 
@@ -63,7 +63,7 @@ pcl_conversions
 EIGEN3
 PCL
 pcl_ros
-livox_ros_driver2
+# livox_ros_driver2
 
 )
 

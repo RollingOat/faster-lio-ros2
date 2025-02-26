@@ -1,5 +1,7 @@
 # FASTER-LIO-ROS2
 
+This branch removes dependecies on livox driver and livox SDK2 for easier building.
+
 Migration [Faster-LIO](https://github.com/gaoxiang12/faster-lio) to ROS2 
 
 Originally Implemented by https://github.com/GangGeon10/Faster-LIO-ROS2
@@ -14,8 +16,8 @@ Originally Implemented by https://github.com/GangGeon10/Faster-LIO-ROS2
 3. eigen: ```sudo apt-get install libeigen3-dev```
 4. pcl: ```sudo apt-get install libpcl-dev```
 5. yaml-cpp: ```sudo apt-get install libyaml-cpp-dev```
-6. [Livox-SDK2](https://github.com/Livox-SDK/Livox-SDK2)
-7. [livox_ros_driver2](https://github.com/Livox-SDK/livox_ros_driver2)
+~~6. [Livox-SDK2](https://github.com/Livox-SDK/Livox-SDK2)~~
+~~7. [livox_ros_driver2](https://github.com/Livox-SDK/livox_ros_driver2)~~
 
 ## Build
 

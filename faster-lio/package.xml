@@ -20,7 +20,7 @@
   <exec_depend>pcl_ros</exec_depend>
   <exec_depend>pcl_conversions</exec_depend>
   <exec_depend>libpcl-all-dev</exec_depend>
-  <exec_depend>livox_ros_driver2</exec_depend>
+  <!-- <exec_depend>livox_ros_driver2</exec_depend> -->
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 

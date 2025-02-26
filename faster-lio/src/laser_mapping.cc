@@ -476,8 +476,11 @@ void LaserMapping::SubAndPubToROS(){
     // ROS2
 
     if (preprocess_->GetLidarType() == LidarType::AVIA) {
-        sub_livox_ = this->create_subscription<livox_ros_driver2::msg::CustomMsg>(lidar_topic, rclcpp::QoS(200000).best_effort(), 
-                                [this](const livox_ros_driver2::msg::CustomMsg::SharedPtr msg) { LivoxPCLCallBack(msg); });
+        // sub_livox_ = this->create_subscription<livox_ros_driver2::msg::CustomMsg>(lidar_topic, rclcpp::QoS(200000).best_effort(), 
+        //                         [this](const livox_ros_driver2::msg::CustomMsg::SharedPtr msg) { LivoxPCLCallBack(msg); });
+        LOG(WARNING) << "Lidar type is AVIA, not supported in ROS2";
+        sub_pcl_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(lidar_topic, rclcpp::QoS(200000).best_effort(), 
+        [this](const sensor_msgs::msg::PointCloud2::SharedPtr msg) { StandardPCLCallBack(msg); });
     } else {
         sub_pcl_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(lidar_topic, rclcpp::QoS(200000).best_effort(), 
                                 [this](const sensor_msgs::msg::PointCloud2::SharedPtr msg) { StandardPCLCallBack(msg); });
@@ -517,7 +520,7 @@ LaserMapping::LaserMapping(const std::string &name) : Node(name) {
 
 void LaserMapping::Run() {
     if (!SyncPackages()) {
-        LOG(WARNING) << "Sync failed, skip this scan!";
+        // LOG(WARNING) << "Sync failed, skip this scan!";
         return;
     }
 
@@ -655,45 +658,45 @@ void LaserMapping::StandardPCLCallBack(const sensor_msgs::msg::PointCloud2::Shar
 }
 
 // void LaserMapping::LivoxPCLCallBack(const livox_ros_driver::CustomMsg::ConstPtr &msg) {
-void LaserMapping::LivoxPCLCallBack(const livox_ros_driver2::msg::CustomMsg::SharedPtr msg) {
-    mtx_buffer_.lock();
-    Timer::Evaluate(
-        [&, this]() {
-            scan_count_++;
-            // if (msg->header.stamp.toSec() < last_timestamp_lidar_) {
-            //     LOG(WARNING) << "lidar loop back, clear buffer";
-            //     lidar_buffer_.clear();
-            // }
-            if ((double)msg->header.stamp.sec + (double)1e-9* msg->header.stamp.nanosec < last_timestamp_lidar_) {
-                LOG(ERROR) << "lidar loop back, clear buffer";
-                lidar_buffer_.clear();
-            }
+// void LaserMapping::LivoxPCLCallBack(const livox_ros_driver2::msg::CustomMsg::SharedPtr msg) {
+//     mtx_buffer_.lock();
+//     Timer::Evaluate(
+//         [&, this]() {
+//             scan_count_++;
+//             // if (msg->header.stamp.toSec() < last_timestamp_lidar_) {
+//             //     LOG(WARNING) << "lidar loop back, clear buffer";
+//             //     lidar_buffer_.clear();
+//             // }
+//             if ((double)msg->header.stamp.sec + (double)1e-9* msg->header.stamp.nanosec < last_timestamp_lidar_) {
+//                 LOG(ERROR) << "lidar loop back, clear buffer";
+//                 lidar_buffer_.clear();
+//             }
 
-            // last_timestamp_lidar_ = msg->header.stamp.toSec();
-            //ROS2
-            last_timestamp_lidar_ =(double)msg->header.stamp.sec + (double)1e-9* msg->header.stamp.nanosec;
-            if (!time_sync_en_ && abs(last_timestamp_imu_ - last_timestamp_lidar_) > 10.0 && !imu_buffer_.empty() &&
-                !lidar_buffer_.empty()) {
-                LOG(INFO) << "IMU and LiDAR not Synced, IMU time: " << last_timestamp_imu_
-                          << ", lidar header time: " << last_timestamp_lidar_;
-            }
+//             // last_timestamp_lidar_ = msg->header.stamp.toSec();
+//             //ROS2
+//             last_timestamp_lidar_ =(double)msg->header.stamp.sec + (double)1e-9* msg->header.stamp.nanosec;
+//             if (!time_sync_en_ && abs(last_timestamp_imu_ - last_timestamp_lidar_) > 10.0 && !imu_buffer_.empty() &&
+//                 !lidar_buffer_.empty()) {
+//                 LOG(INFO) << "IMU and LiDAR not Synced, IMU time: " << last_timestamp_imu_
+//                           << ", lidar header time: " << last_timestamp_lidar_;
+//             }
 
-            if (time_sync_en_ && !timediff_set_flg_ && abs(last_timestamp_lidar_ - last_timestamp_imu_) > 1 &&
-                !imu_buffer_.empty()) {
-                timediff_set_flg_ = true;
-                timediff_lidar_wrt_imu_ = last_timestamp_lidar_ + 0.1 - last_timestamp_imu_;
-                LOG(INFO) << "Self sync IMU and LiDAR, time diff is " << timediff_lidar_wrt_imu_;
-            }
+//             if (time_sync_en_ && !timediff_set_flg_ && abs(last_timestamp_lidar_ - last_timestamp_imu_) > 1 &&
+//                 !imu_buffer_.empty()) {
+//                 timediff_set_flg_ = true;
+//                 timediff_lidar_wrt_imu_ = last_timestamp_lidar_ + 0.1 - last_timestamp_imu_;
+//                 LOG(INFO) << "Self sync IMU and LiDAR, time diff is " << timediff_lidar_wrt_imu_;
+//             }
 
-            PointCloudType::Ptr ptr(new PointCloudType());
-            preprocess_->PCProcess(msg, ptr);
-            lidar_buffer_.emplace_back(ptr);
-            time_buffer_.emplace_back(last_timestamp_lidar_);
-        },
-        "Preprocess (Livox)");
+//             PointCloudType::Ptr ptr(new PointCloudType());
+//             preprocess_->PCProcess(msg, ptr);
+//             lidar_buffer_.emplace_back(ptr);
+//             time_buffer_.emplace_back(last_timestamp_lidar_);
+//         },
+//         "Preprocess (Livox)");
 
-    mtx_buffer_.unlock();
-}
+//     mtx_buffer_.unlock();
+// }
 
 // void LaserMapping::IMUCallBack(const sensor_msgs::Imu::ConstPtr &msg_in) {
 void LaserMapping::IMUCallBack(const sensor_msgs::msg::Imu::SharedPtr msg_in) {

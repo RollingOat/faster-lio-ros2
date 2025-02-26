@@ -16,7 +16,7 @@
 
 
 //ROS2
-#include "livox_ros_driver2/msg/custom_msg.hpp"
+// #include "livox_ros_driver2/msg/custom_msg.hpp"
 #include "nav_msgs/msg/path.hpp"
 #include <pcl/filters/voxel_grid.h>
 #include <rclcpp/rclcpp.hpp>
@@ -72,7 +72,7 @@ class LaserMapping : public rclcpp::Node {
     // void IMUCallBack(const sensor_msgs::Imu::ConstPtr &msg_in);
 
     void StandardPCLCallBack(const sensor_msgs::msg::PointCloud2::SharedPtr msg);
-    void LivoxPCLCallBack(const livox_ros_driver2::msg::CustomMsg::SharedPtr msg);
+    // void LivoxPCLCallBack(const livox_ros_driver2::msg::CustomMsg::SharedPtr msg);
     void IMUCallBack(const sensor_msgs::msg::Imu::SharedPtr msg_in);
 
 
@@ -164,7 +164,7 @@ class LaserMapping : public rclcpp::Node {
 
     //ROS2
     rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr sub_pcl_;
-    rclcpp::Subscription<livox_ros_driver2::msg::CustomMsg>::SharedPtr sub_livox_;
+    // rclcpp::Subscription<livox_ros_driver2::msg::CustomMsg>::SharedPtr sub_livox_;
     rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr sub_imu_;  
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pub_laser_cloud_world_;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pub_laser_cloud_body_;
