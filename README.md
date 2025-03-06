@@ -25,7 +25,8 @@ Originally Implemented by https://github.com/GangGeon10/Faster-LIO-ROS2
 cd ~/<work_space>/src
 git clone https://github.com/frankgon1627/Faster-LIO-ROS2.git
 cd ~/<work_space>
-colcon build --symlink-install
+colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+
 ```
 
 ## Run
