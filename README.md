@@ -35,5 +35,9 @@ source install/local_setup.sh
 ros2 launch faster_lio mapping_ouster64.launch.py
 ```
 
+## use docker and vscode
+1. run the docker container
+2. open vscode on your local machine, search for cmd: Attach to Running Container
+
 ## Acknowledgments
 Thanks to [Faster-LIO](https://github.com/gaoxiang12/faster-lio) for their research
