@@ -33,6 +33,7 @@ colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 ```
 source install/local_setup.sh
 ros2 launch faster_lio mapping_ouster64.launch.py
+ros2 bag play faster_lio_ros2_test_10hz --qos-profile-overrides-path qos_config.yaml 
 ```
 
 ## use docker and vscode
