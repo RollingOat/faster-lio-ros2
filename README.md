@@ -8,6 +8,9 @@ Originally Implemented by https://github.com/GangGeon10/Faster-LIO-ROS2
 * Ubuntu 20.04 LTS
 * ROS galactic version
 
+## Known Problems
+The code won't work when migrating to ROS Jazzy. Odometry drifts in the very beginning.
+
 ## Dependency
 1. ROS galactic
 2. glog: ```sudo apt-get install libgoogle-glog-dev```
