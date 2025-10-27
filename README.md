@@ -17,7 +17,7 @@ The code won't work when migrating to ROS Jazzy. Odometry drifts in the very beg
 3. eigen: ```sudo apt-get install libeigen3-dev```
 4. pcl: ```sudo apt-get install libpcl-dev```
 5. yaml-cpp: ```sudo apt-get install libyaml-cpp-dev```
-6. [Livox-SDK2](https://github.com/Livox-SDK/Livox-SDK2)
+6. [Livox-SDK2](https://github.com/Livox-SDK/Livox-SDK2) (you can ignore steps 6 and 7 by switching to the branch https://github.com/RollingOat/faster-lio-ros2/tree/faster-lio-ros2-ouster)
 7. [livox_ros_driver2](https://github.com/Livox-SDK/livox_ros_driver2)
 
 ## Build
