@@ -24,7 +24,7 @@ The code won't work when migrating to ROS Jazzy. Odometry drifts in the very beg
 
 ```
 cd ~/<work_space>/src
-git clone https://github.com/frankgon1627/Faster-LIO-ROS2.git
+git clone https://github.com/RollingOat/faster-lio-ros2.git
 cd ~/<work_space>
 colcon build --symlink-install
 ```
